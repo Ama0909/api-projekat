@@ -1,0 +1,136 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "WeatherMap API",
+        "version": "1.0.0",
+        "description": "API documentation for WeatherMap"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3001",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/weather/current/{location}": {
+            "get": {
+                "summary": "Get current weather",
+                "description": "Fetches the current weather for a specific location.",
+                "parameters": [
+                    {
+                        "name": "location",
+                        "in": "path",
+                        "required": true,
+                        "description": "The location for which to retrieve the weather.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WeatherResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/InvalidLocationResponse"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedResponse"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerErrorResponse"
+                    }
+                }
+            }
+        },
+        "/weather/history/{location}": {
+            "get": {
+                "summary": "Get historical weather",
+                "description": "Fetches the historical weather data for a specific location.",
+                "parameters": [
+                    {
+                        "name": "location",
+                        "in": "path",
+                        "required": true,
+                        "description": "The location for which to retrieve the historical weather data.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WeatherResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/InvalidLocationResponse"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedResponse"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerErrorResponse"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "InvalidLocationResponse": {
+                "description": "Invalid location",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "UnauthorizedResponse": {
+                "description": "Unauthorized",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "ServerErrorResponse": {
+                "description": "Internal server error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "WeatherResponse": {
+                "type": "object",
+                "properties": {}
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {}
+            }
+        }
+    }
+}
